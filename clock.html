@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pink Pastel Analog Clock</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #fdf2f8; /* Soft light pink background */
+      font-family: Arial, sans-serif;
+    }
+
+    /* Clock Outer Shell */
+    .clock {
+      width: 250px;
+      height: 250px;
+      background: #fbcfe8; /* Soft pastel pink face */
+      border: 8px solid #f472b6; /* Bright pink border */
+      border-radius: 50%;
+      position: relative;
+      box-shadow: 0 10px 25px rgba(244, 114, 182, 0.3);
+    }
+
+    /* Center Dot */
+    .clock::after {
+      content: '';
+      width: 12px;
+      height: 12px;
+      background: #db2777; /* Deep pink center pin */
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+    }
+
+    /* Common Hand Styles */
+    .hand {
+      position: absolute;
+      bottom: 50%;
+      left: 50%;
+      transform-origin: bottom center;
+      border-radius: 4px;
+    }
+
+    /* Hour Hand */
+    .hour-hand {
+      width: 6px;
+      height: 60px;
+      background: #9d174d; /* Dark raspberry pink */
+      margin-left: -3px;
+    }
+
+    /* Minute Hand */
+    .min-hand {
+      width: 4px;
+      height: 85px;
+      background: #be185d; /* Medium hot pink */
+      margin-left: -2px;
+    }
+
+    /* Second Hand */
+    .second-hand {
+      width: 2px;
+      height: 95px;
+      background: #f43f5e; /* Bright accent coral-pink */
+      margin-left: -1px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="clock">
+    <div class="hand hour-hand" id="hour"></div>
+    <div class="hand min-hand" id="min"></div>
+    <div class="hand second-hand" id="sec"></div>
+  </div>
+
+  <script>
+    function updateClock() {
+      const now = new Date();
+      
+      const seconds = now.getSeconds();
+      const minutes = now.getMinutes();
+      const hours = now.getHours();
+
+      // Calculate rotations
+      const secDeg = (seconds / 60) * 360;
+      const minDeg = ((minutes + seconds / 60) / 60) * 360;
+      const hourDeg = ((hours % 12 + minutes / 60) / 12) * 360;
+
+      // Apply rotations to hands
+      document.getElementById('sec').style.transform = `rotate(${secDeg}deg)`;
+      document.getElementById('min').style.transform = `rotate(${minDeg}deg)`;
+      document.getElementById('hour').style.transform = `rotate(${hourDeg}deg)`;
+    }
+
+    // Run every second
+    setInterval(updateClock, 1000);
+    updateClock(); // Initial run
+  </script>
+
+</body>
+</html>
